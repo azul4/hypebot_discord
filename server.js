@@ -1,5 +1,6 @@
 const { Client, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
+require('dotenv').config();
 
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -7,7 +8,7 @@ console.log("hello")
 
 
 // Slash Command 추가
-registerCommands(process.env.DISCORD_BOT_TOKEN, process.env.CLIENT_ID, process.env.TO_REGISTER_GUILD);
+//registerCommands(process.env.DISCORD_BOT_TOKEN, process.env.CLIENT_ID, process.env.TO_REGISTER_GUILD);
 
 
 client.on('ready', () => {
@@ -24,4 +25,4 @@ client.on('interactionCreate', async interaction => {
   }
 });
 
-client.login(token);
+client.login(process.env.DISCORD_TOKEN);
