@@ -1,19 +1,13 @@
 {
-    "name": "express-HelloWorld",
-    "description": "Hello World ExpressJS WebService",
+    "name": "Hypebot",
+    "description": "Hypebot Discord Bot",
     "version": "0.0.1",
     "private": true,
     "dependencies": {
         "discord.js": "^14.7.1",
-        "dotenv": "^16.0.3",
-        "express": "^4.18.2"
-    },
-    "devDependencies": {
-        "mocha": "^5.2.0",
-        "supertest": "3.0.0",
-        "unit.js": "^2.1.1"
+        "dotenv": "^16.0.3"
     },
     "scripts": {
-        "test": "mocha --recursive tests --exit"
+        "start": "node server.js"
     }
 }
