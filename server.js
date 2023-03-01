@@ -1,6 +1,14 @@
+/* Old Conventions
 const fs = require('node:fs');
 const path = require('node:path');
 const { REST, Routes, Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+*/
+
+//Modern conventions
+import fs from 'node:fs'
+import path from 'node:path'
+import { REST, Routes, Client, Collection, Events, GatewayIntentBits } from 'discord.js'
+import {registerCommands} from "./commands/hi.js"
 require('dotenv').config();
 
 // Create a new client instance
@@ -27,25 +35,25 @@ const rest = new REST( {version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
 //즉시실행 함수
 (async () => {
-	try {
-		console.log(`Started refreshing ${commands.length} application (/) commands.`);
+  try {
+    console.log(`Started refreshing ${commands.length} application (/) commands.`);
 
-		// The put method is used to fully refresh all commands in the guild with the current set
-		const data = await rest.put(
-			Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.TO_REGISTER_GUILD),
-			{ body: commands },
-		);
+    // The put method is used to fully refresh all commands in the guild with the current set
+    const data = await rest.put(
+      Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.TO_REGISTER_GUILD),
+      { body: commands },
+    );
 
-		console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-	} catch (error) {
-		// And of course, make sure you catch and log any errors!
-		console.error(error);
-	}
+    console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+  } catch (error) {
+    // And of course, make sure you catch and log any errors!
+    console.error(error);
+  }
 })();
 
 
 // Slash Command 추가
-//registerCommands(process.env.DISCORD_TOKEN, process.env.CLIENT_ID, process.env.TO_REGISTER_GUILD);
+registerCommands(process.env.DISCORD_TOKEN, process.env.CLIENT_ID, process.env.TO_REGISTER_GUILD);
 
 
 client.on('ready', () => {
