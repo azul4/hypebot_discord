@@ -1,4 +1,5 @@
 {
+    "type": "module",
     "name": "Hypebot",
     "description": "Hypebot Discord Bot",
     "version": "0.0.1",

@@ -7,9 +7,15 @@ const { REST, Routes, Client, Collection, Events, GatewayIntentBits } = require(
 //Modern conventions
 import fs from 'node:fs'
 import path from 'node:path'
+import * as url from 'url';
+
 import { REST, Routes, Client, Collection, Events, GatewayIntentBits } from 'discord.js'
-import {registerCommands} from "./commands/hi.js"
-require('dotenv').config();
+import { HiCommand } from "./commands/hi.js"
+
+import dotenv from 'dotenv';
+dotenv.config();
+//require('dotenv').config(); -> 
+
 console.log("dotenv 설정 완료");
 
 // Create a new client instance
@@ -17,20 +23,33 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBit
 const commands = [];
 client.commands = new Collection();
 
-const commandsPath = path.join(__dirname, 'commands');
-const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+// const commandsPath = path.join(__dirname, 'commands');
+// const commandsPath = path.join(url.fileURLToPath(new URL('.', import.meta.url)));
+// const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
-for (const file of commandFiles) {
-  const filePath = path.join(commandsPath, file);
-  const command = require(filePath);
+const commandList = [HiCommand];
 
+// for (const file of commandFiles) {
+//   const filePath = path.join(commandsPath, file);
+//   const command = require(filePath);
+
+//   if ('data' in command && 'execute' in command) {
+//     client.commands.set(command.data.name, command);
+//     commands.push(command.data.toJSON());
+//   } else {
+//     console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+//   }
+// }
+
+for (const command of commandList) {
   if ('data' in command && 'execute' in command) {
     client.commands.set(command.data.name, command);
     commands.push(command.data.toJSON());
   } else {
-    console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+    console.log(`[WARNING] The command ${command} is missing a required "data" or "execute" property.`);
   }
 }
+
 console.log("hello")
 const rest = new REST( {version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
@@ -54,7 +73,7 @@ const rest = new REST( {version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
 
 // Slash Command 추가
-registerCommands(process.env.DISCORD_TOKEN, process.env.CLIENT_ID, process.env.TO_REGISTER_GUILD);
+// registerCommands(process.env.DISCORD_TOKEN, process.env.CLIENT_ID, process.env.TO_REGISTER_GUILD);
 
 
 client.on('ready', () => {
