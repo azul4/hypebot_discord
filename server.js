@@ -60,6 +60,7 @@ const rest = new REST( {version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
     // The put method is used to fully refresh all commands in the guild with the current set
     const data = await rest.put(
+      //Routes.applicationGlobal 으로 시작하는 메서드 쓰면 하입봇 있는 전체 서버에 명령어 실행가능
       Routes.applicationGuildCommands(process.env.CLIENT_ID, process.env.TO_REGISTER_GUILD),
       { body: commands },
     );
