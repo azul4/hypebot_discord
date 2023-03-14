@@ -11,7 +11,6 @@ def build_100(cmd):
         factory[stuff].append(i+1)
 
     return factory
-    pass
 
 def moveall_200(cmd):
     global factory
